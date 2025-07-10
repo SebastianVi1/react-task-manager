@@ -1,0 +1,43 @@
+body {
+  width: 100%;
+  height: 100vh;
+  background-color: #4d98;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.main-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 250px auto auto;
+  background-color: #fff;
+  min-width: 400px;
+  padding: 30px;
+}
+.title {
+  text-align: center;
+  font-size: 100;
+}
+.add-input-container {
+  display: flex;
+  width: 100%;
+}
+#add-task-input {
+  padding: 10px;
+  width: 100%;
+}
+
+.task-list-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
