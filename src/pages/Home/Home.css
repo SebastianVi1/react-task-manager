@@ -23,11 +23,12 @@ body {
   min-width: 400px;
   padding: 30px;
   border-radius: 6px;
-  box-shadow: 0 0 4px #0006;
+  box-shadow: 0 0 10px #fff5;
 }
 .title {
   text-align: center;
   font-size: 100;
+  margin-bottom: 30px;
 }
 .add-input-container {
   display: flex;
@@ -73,12 +74,10 @@ button:hover {
   opacity: 0.8;
 }
 
-.footer-container button {
-  padding: 0px 15px;
-  height: 30px;
-}
+
 li {
   list-style: none;
   width: 100%;
   margin: 0;
+
 }

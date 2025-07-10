@@ -14,10 +14,10 @@ function ConfirmModal(props: Props) {
     <>
       <div className="dark-bg modal">
         <div className="modal-container">
-          <h3 className="modal-title">
-            Are you sure you want <br />
-            to delete the task?
-          </h3>
+          <p className="modal-title">
+            Are you sure you want 
+            to delete <br /> the task?
+          </p>
           <div className="modal_button-container">
             <button className="btn modal_cancel-btn" onClick={onClose}>Cancel</button>
             <button className="btn modal_confirm-btn" onClick={onConfirm}>
