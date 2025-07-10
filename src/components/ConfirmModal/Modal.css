@@ -1,0 +1,36 @@
+.dark-bg {
+  background-color: #0007;
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
+.modal_button-container {
+  display: flex;
+  justify-content: center;
+}
+.modal_confirm-btn {
+  background: red;
+  color: white;
+}
+
+.modal_confirm-btn:hover {
+  background-color: red;
+  opacity: 0.5;
+}
+.modal-title {
+  text-align: center;
+}
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #ccc;
+  margin: 40% auto auto;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px#38b6ff;
+}

@@ -1,7 +1,7 @@
 body {
   width: 100%;
   height: 100vh;
-  background-color: #4d98;
+  background-color: #1e293b;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -22,6 +22,8 @@ body {
   background-color: #fff;
   min-width: 400px;
   padding: 30px;
+  border-radius: 6px;
+  box-shadow: 0 0 4px #0006;
 }
 .title {
   text-align: center;
@@ -32,12 +34,51 @@ body {
   width: 100%;
 }
 #add-task-input {
-  padding: 10px;
+  padding: 5px;
   width: 100%;
+}
+
+.add-input-container button {
+  width: 50px;
+  border-radius: 3px;
+  padding: 0;
+  margin: 0 0 0 2px;
+  padding: 5px;
 }
 
 .task-list-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  padding: 0;
+}
+img {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  object-fit: cover;
+}
+
+button {
+  border: none;
+  border-radius: 2px;
+  margin: 0;
+  padding-bottom: 10px;
+  background-color: #48e;
+  height: 40px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.footer-container button {
+  padding: 0px 15px;
+  height: 30px;
+}
+li {
+  list-style: none;
+  width: 100%;
+  margin: 0;
 }

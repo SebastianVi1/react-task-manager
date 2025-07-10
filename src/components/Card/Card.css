@@ -3,8 +3,12 @@
   flex-direction: column;
   width: 100%;
   color: red;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: space-around;
+  margin: 5px 0;
+  border-radius: 2px;
+  height: 44px;
+  box-shadow: 0px 0px 10px #0002;
+  border: none;
 }
 .card-body {
   display: flex;
@@ -12,6 +16,7 @@
   margin: 0;
   padding: 0px;
 }
+
 p {
   display: inline;
   color: red;
@@ -19,22 +24,45 @@ p {
   padding: 8px;
 }
 
-.buttons-container {
-  display: inline;
-}
 .button {
-  display: inline;
+  display: inline-flex;
+  position: absolute;
+  right: -44px;
   border: 1px solid #000;
   margin: 0;
-  width: 44px;
-  height: 100%;
+  border-radius: 4px;
+  height: auto;
+  padding: 0;
+  display: none;
+  box-shadow: 0 0 10px #0002;
 }
+
 .delete-button {
   background: red;
+  color: #fff;
+  border: none;
+  width: 44px;
+
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-button div {
-  display: inline;
+
+.card:hover .delete-button {
+  transform: translateX(0);
+  opacity: 1;
 }
+
+.card:hover .delete-button:hover {
+  opacity: 0.8;
+}
+
 .footer-container {
   width: 100%;
   display: flex;
@@ -43,4 +71,12 @@ button div {
 }
 .footer-container button {
   height: 24px;
+}
+
+img {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  height: 100%;
 }
