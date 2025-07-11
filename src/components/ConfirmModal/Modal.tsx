@@ -8,15 +8,14 @@ interface Props {
 }
 
 function ConfirmModal(props: Props) {
-  const { isOpen, onClose, onConfirm } = props;
+  const { isOpen, onClose, onConfirm, children } = props;
   if (!isOpen) return null;
   return (
     <>
       <div className="dark-bg modal">
         <div className="modal-container">
           <p className="modal-title">
-            Are you sure you want 
-            to delete <br /> the task?
+            {children}
           </p>
           <div className="modal_button-container">
             <button className="btn modal_cancel-btn" onClick={onClose}>Cancel</button>

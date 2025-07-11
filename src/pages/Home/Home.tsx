@@ -9,18 +9,21 @@ interface Task {
   description: string;
   isComplete: boolean;
 }
+
 function Home() {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isDeleteAllOpen, setIsDeleteAllOpen] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
+  const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
     //Fetch data from server
     axios
       .get("http://localhost:8085/api/get-tasks")
       .then((response) => {
+        // Ensure proper boolean conversion from server response
         const tasks: Task[] = response.data.map((item: Task) => ({
           id: item.id,
           description: item.description,
@@ -34,20 +37,44 @@ function Home() {
   }, []);
 
   function deleteTask() {
+    console.log("deleteTask called with selectedId:", selectedId);
+    
+    if (!selectedId) {
+      console.error("No task ID selected for deletion");
+      alert("Error: No task selected for deletion");
+      return;
+    }
+
+    console.log(`Attempting to delete task with ID: ${selectedId}`);
+    
     axios
       .delete(`http://localhost:8085/api/delete-task/${selectedId}`)
-          .then((response) => {
-      console.log(response);
-      // Remover la tarea del estado
-      setTaskList(prevTasks => prevTasks.filter(task => task.id !== selectedId));
-      setIsOpen(false);
-      setSelectedId(null);
-    })
+      .then((response) => {
+
+        
+        // Update local state
+        setTaskList(prevTasks => prevTasks.filter(task => task.id !== selectedId));
+        setIsOpen(false);
+        setSelectedId(null);
+        
+        console.log("Task deleted successfully from local state");
+      })
       .catch((error) => {
         console.error("Error deleting task:", error);
+        console.error("Error details:", {
+          message: error.message,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data
+        });
+        
+        // Keep modal open if there's an error
+        alert("Error deleting task. Please try again.");
       });
   }
+
   function handleDeleteOnClick(id:number) {
+    console.log("handleDeleteOnClick called with id:", id);
     setSelectedId(id);
     setIsOpen(true);
   }
@@ -66,6 +93,7 @@ function Home() {
       console.log("TaskCreated:", response.data);
       console.log("Response structure:", JSON.stringify(response.data, null, 2));
       
+      // Ensure proper boolean conversion from server response
       const newTask: Task = {
         id: response.data.id,
         description: response.data.description,
@@ -92,7 +120,7 @@ function Home() {
     }
   }
 
-    function deleteAll(){
+  function deleteAll(){
     axios.post('http://localhost:8085/api/delete-all')
     .then((response) => {
       console.log("Deleted successfully");
@@ -108,19 +136,36 @@ function Home() {
   function handleDeleteAllClick() {
     setIsDeleteAllOpen(true);
   }
+  
+  function clickCard(id: number){
+    // Find the current task
+    const currentTask = taskList.find((task) => task.id === id);
+    if (!currentTask) return;
 
-  const footerStyle = {
-    "display": "flex",
-    "justifyContent": "space-between",
-    "alignItems": "center",
-    "padding": "15px 20px",
-    "height": "50px",
+    // Toggle the completion status
+    const newIsComplete = !currentTask.isComplete;
     
-    "borderTop": "1px solid #e9ecef",
-    "borderRadius": "0 0 8px 8px",
-    "marginTop": "10px"
+    axios.put(`http://localhost:8085/api/complete-task/${id}`, {
+      description: currentTask.description,
+      isComplete: newIsComplete
+    })
+    .then((response) => {
+      console.log(`Task ${id} updated to ${newIsComplete ? 'completed' : 'pending'}`);
+      
+      // Update the task in local state
+      setTaskList(prevTasks => 
+        prevTasks.map(task => 
+          task.id === id 
+            ? { ...task, isComplete: newIsComplete }
+            : task
+        )
+      );
+      
+      setSelectedId(null);
+    }).catch((error) => {
+      console.error("Error updating task:", error);
+    })
   }
-
 
   return (
 
@@ -148,10 +193,14 @@ function Home() {
             console.log("Rendering element:", element);
             return (
               <li className="list-item" key={element.id}>
+
+                {/*  Card */}
                 <TaskCard 
+                  onClickHandler={clickCard}
                   elementId={element.id}
                   handleDeleteOnClick={handleDeleteOnClick}
                   description={element.description}
+                  isComplete={element.isComplete}
                 />
               </li>
             );
@@ -159,27 +208,13 @@ function Home() {
         </ul>
 
         {taskList.length > 0 && (
-          <div className="footer-container" style={footerStyle}>
-            <p style={{ 
-              margin: 0, 
-              color: "#6c757d", 
-              fontSize: "14px",
-              fontWeight: "500"
-            }}>
+          <div className="footer-container">
+            <p className="footer-text">
               You have {taskList.length} pending item{taskList.length !== 1 ? 's' : ''}
             </p>
             <button 
               onClick={handleDeleteAllClick}
-              style={{
-                backgroundColor: "#dc3545",
-                color: "white",
-                border: "none",
-                padding: "0px 16px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "12px",
-                fontWeight: "500"
-              }}
+              className="clear-all-button"
             >
               Clear all
             </button>
@@ -199,7 +234,7 @@ function Home() {
         onClose={() => setIsDeleteAllOpen(false)}
         onConfirm={deleteAll}
       >
-        ¿Estás seguro de que quieres eliminar todas las tareas? Esta acción no se puede deshacer.
+       Are you sure you want to delete the task?
       </ConfirmModal>
     </div>
   );

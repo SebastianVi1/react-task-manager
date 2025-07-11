@@ -1,36 +1,80 @@
 .dark-bg {
-  background-color: #0007;
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100vw;
-  height: 100%;
-  position: absolute;
-  top: 0px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
+
 .modal_button-container {
   display: flex;
   justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
+
 .modal_confirm-btn {
-  background: red;
+  background: #dc3545;
   color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .modal_confirm-btn:hover {
-  background-color: red;
-  opacity: 0.5;
+  background-color: #c82333;
 }
+
+.modal_cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal_cancel-btn:hover {
+  background-color: #5a6268;
+}
+
 .modal-title {
   text-align: center;
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
 }
+
 .modal-container {
   display: flex;
   flex-direction: column;
-  background-color: #ccc;
-  margin: 40% auto auto;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0px 0px 10px#38b6ff;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #fff8;
+  max-width: 400px;
+  width: 90%;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
